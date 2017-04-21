@@ -3,12 +3,15 @@ var poles = [];
 var coins = [];
 var doubles = [];
 var frowns = [];
-// var hearts = [];
+
 var score = 10;
+
 var d;
 var collect1;
 var collect2;
+var collectbad;
 var jump;
+
 var player0icon;
 var player1icon;
 var player2icon;
@@ -16,38 +19,67 @@ var player3icon;
 var coinImg;
 var doubleImg;
 var frownImg;
+
+var heartImg1;
+var heartObj1;
+
+var heartImg2;
+var heartObj2;
+
+var heartImg3;
+var heartObj3;
+
+
 var pauseGame = true;
+
+var radius1 = 20;
+var radius2 = 20;
+var radius3 = 20;
 
 
 function preload() {
   collect1 = loadSound('sounds/collectsound.mp3');
-  collect2 = loadSound('sounds/collectsound.mp3');
+  collect2 = loadSound('sounds/collectsound2.mp3');
   oops = loadSound('sounds/moon.mp3');
+  collectbad = loadSound('sounds/hitsound.mp3');
   jump = loadSound('sounds/flash-3.mp3');
-  player0icon = loadImage("sad.png");
-  player1icon = loadImage("sunglasses.png");
-  player2icon = loadImage("smile.png");
-  player3icon = loadImage("woo.png");
-  coinImg = loadImage("smile.png");
-  doubleImg = loadImage("glasses.png");
-  frownImg = loadImage("sad.png");
+
+  player0icon = loadImage("assets/sad.png");
+  player1icon = loadImage("assets/smile.png");
+  player2icon = loadImage("assets/bigsmile.png");
+  player3icon = loadImage("assets/woo.png");
+  coinImg = loadImage("assets/smile.png");
+  doubleImg = loadImage("assets/bigsmile.png");
+  frownImg = loadImage("assets/sad.png");
+
+  heartImg1 = loadImage("assets/heart1.png");
+  heartObj1 = loadImage("assets/blank1.png");
+
+  heartImg2 = loadImage("assets/heart2.png");
+  heartObj2 = loadImage("assets/blank2.png");
+
+  heartImg3 = loadImage("assets/heart3.png");
+  heartObj3 = loadImage("assets/blank3.png");
 }
 
 function setup() {
   createCanvas(windowWidth, windowHeight*.8);
   player = new Player();
   floor = new Floor();
-  // hearts.push(new Heart());
 
   coins.push(new Coin());
   doubles.push(new Double());
   frowns.push(new Frown());
   poles.push(new Pole());
+
+
   setTimeout(function(){
     pauseGame = false;
   }, 1300);
 
+
 }
+
 
 // Player Class //
 // Player Class //
@@ -62,7 +94,7 @@ function Player(){
   this.velocity = 0;
 
   this.intersects = function(other) {
-    var d = dist(this.x, this.y, other.x, other.y);
+    var d = dist(this.x, this.y-25, other.x, other.y);
     if (d < this.r + other.r) {
       return true;
     } else {
@@ -102,32 +134,32 @@ function Player(){
     //Poles Class
 //////////////////////////////
 function Pole() {
-    this.bottom = random(height/2)+50;
+    this.bottom = random(height/2)+40;
     this.x = width;
     this.w = 20;
     this.speed = 5;
 
     if (score > 10){
-      this.speed = 7;
+      this.speed = 8;
     }
-    if (score > 20){
+    if (score >= 20){
       this.speed = 9;
     }
-    if (score > 30){
+    if (score >= 30){
+      this.speed = 10;
+    }
+    if (score >= 40){
       this.speed = 11;
     }
-    if (score > 40){
+    if (score >= 50){
       this.speed = 13;
-    }
-    if (score > 50){
-      this.speed = 15;
     }
 
     this.highlight = false;
 
     this.hits = function(player) {
       if (player.y > height - this.bottom) {
-        if (player.x+25 > this.x && player.x < this.x + this.w) {
+        if (player.x+20 > this.x && player.x < this.x + this.w) {
           this.highlight = true;
           return true;
         }
@@ -146,15 +178,6 @@ function Pole() {
             // console.log('minus 1');
             score--;
 
-            if (score < 8) {
-              // thirdHeart.r = 0;
-            }
-            else if (score < 6) {
-              // secondHeart.r = 0;
-            }
-            else if (score < 4) {
-              // firstHeart.r = 0;
-            }
           }
       }
       rect(this.x, height-this.bottom, this.w, this.bottom);
@@ -184,19 +207,19 @@ function Coin() {
       this.speed = 6;
 
       if(score > 15){
-        this.speed = 8;
+        this.speed = 7;
       }
       if(score > 25){
-        this.speed = 10;
+        this.speed = 9;
       }
       if(score > 35){
-        this.speed = 12;
+        this.speed = 11;
       }
 
       this.highlight = false;
       // console.log("this" + player.x);
       this.hits = function(player) {
-        if (player.y < 280 && this.x > 80 && this.x < 125) {
+        if (player.y < 290 && this.x > 80 && this.x < 125) {
             this.highlight = true;
             return true;
         }
@@ -248,7 +271,7 @@ function Coin() {
         this.highlight = false;
         // console.log("this" + player.x);
         this.hits = function(player) {
-          if (player.y < 280 && this.x > 80 && this.x < 125) {
+          if (player.y < 290 && this.x > 80 && this.x < 125) {
               this.highlight = true;
               return true;
           }
@@ -332,6 +355,37 @@ function Frown() {
  function draw(){
   background(125, 204, 200);
 
+
+
+  var heart1 = image(heartImg1, width/1.3, height/10, radius1, radius1);
+
+  function removeHeart1() {
+      heart1 = image(heartObj1, width/1.3, height/10, radius1, radius1);
+  }
+  if (score < 10) {
+    removeHeart1();
+    console.log("remove1");
+  }
+
+  var heart2 = image(heartImg2, width/1.5, height/10, radius2, radius2);
+
+  function removeHeart2() {
+    heart2 = image(heartObj2, width/1.5, height/10, radius2, radius2);
+  }
+  if (score < 15) {
+    removeHeart2();
+    console.log("remove2");
+  }
+
+  var heart3 = image(heartImg3, width/1.75, height/10, radius3, radius3);
+
+  function removeHeart3() {
+      heart3 = image(heartObj3, width/1.75, height/10, radius3, radius3);
+  }
+  if (score < 20) {
+    removeHeart3();
+    console.log("remove1");
+  }
 
 
 // Player //
@@ -427,7 +481,6 @@ function Frown() {
 // Doubles //
 // Doubles //
 // Doubles //
-
   for (var i = doubles.length-1; i >= 0; i--) {
     doubles[i].show();
     doubles[i].update();
@@ -450,14 +503,13 @@ function Frown() {
 // Frown //
 // Frown //
 // Frown //
-
   for (var i = frowns.length-1; i >= 0; i--) {
     frowns[i].show();
     frowns[i].update();
 
     if (frowns[i].hits(player) == true ) {
-      if ( !collect2.isPlaying() ) {
-          collect2.play();
+      if ( !collectbad.isPlaying() ) {
+          collectbad.play();
           score--;
           // console.log('add');
         }
