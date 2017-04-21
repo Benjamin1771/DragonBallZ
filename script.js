@@ -86,10 +86,10 @@ function setup() {
 // Player Class //
 function Player(){
   this.y = height/4;
-  this.x = 105;
+  this.x = 65;
   this.r = 58;
 
-  this.gravity =2;
+  this.gravity = 2;
   this.lift = -windowHeight/10;
   this.velocity = 0;
 
@@ -134,7 +134,7 @@ function Player(){
     //Poles Class
 //////////////////////////////
 function Pole() {
-    this.bottom = random(height/2)+40;
+    this.bottom = random(height/2)+30;
     this.x = width;
     this.w = 20;
     this.speed = 5;
@@ -219,7 +219,7 @@ function Coin() {
       this.highlight = false;
       // console.log("this" + player.x);
       this.hits = function(player) {
-        if (player.y < 290 && this.x > 80 && this.x < 125) {
+        if (player.y < 290 && this.x > 45 && this.x < 85) {
             this.highlight = true;
             return true;
         }
@@ -271,7 +271,7 @@ function Coin() {
         this.highlight = false;
         // console.log("this" + player.x);
         this.hits = function(player) {
-          if (player.y < 290 && this.x > 80 && this.x < 125) {
+          if (player.y < 290 && this.x > 45 && this.x < 85) {
               this.highlight = true;
               return true;
           }

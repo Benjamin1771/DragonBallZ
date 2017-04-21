@@ -6,14 +6,14 @@
         id        = "com.sheridan.imm.collective"
         version   = "1.0.0">
 
-    <name>DragOnBallZ</name>
+    <name>EmoJump!</name>
 
     <description>
-        Hello World sample application that responds to the deviceready event.
+        A bouncing emoji game!
     </description>
 
     <author href="http://phonegap.com" email="leger932@gmail.com">
-        Bruce Lee
+        Ben Leger
     </author>
 
     <!--
