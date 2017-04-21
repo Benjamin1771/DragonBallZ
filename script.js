@@ -1,11 +1,12 @@
 var player;
 var poles = [];
 var coins = [];
-var ncoins = [];
+var doubles = [];
+var frowns = [];
 // var hearts = [];
 var score = 10;
 var d;
-var mySong;
+var collect1;
 var collect2;
 var jump;
 var player0icon;
@@ -13,12 +14,14 @@ var player1icon;
 var player2icon;
 var player3icon;
 var coinImg;
+var doubleImg;
+var frownImg;
 var pauseGame = true;
 
 
 function preload() {
-  mySong = loadSound('sounds/strike.mp3');
-  collect2 = loadSound('sounds/piston-2.mp3');
+  collect1 = loadSound('sounds/collectsound.mp3');
+  collect2 = loadSound('sounds/collectsound.mp3');
   oops = loadSound('sounds/moon.mp3');
   jump = loadSound('sounds/flash-3.mp3');
   player0icon = loadImage("sad.png");
@@ -26,6 +29,8 @@ function preload() {
   player2icon = loadImage("smile.png");
   player3icon = loadImage("woo.png");
   coinImg = loadImage("smile.png");
+  doubleImg = loadImage("glasses.png");
+  frownImg = loadImage("sad.png");
 }
 
 function setup() {
@@ -33,8 +38,10 @@ function setup() {
   player = new Player();
   floor = new Floor();
   // hearts.push(new Heart());
-  ncoins.push(new Coin());
+
   coins.push(new Coin());
+  doubles.push(new Double());
+  frowns.push(new Frown());
   poles.push(new Pole());
   setTimeout(function(){
     pauseGame = false;
@@ -176,10 +183,20 @@ function Coin() {
       this.y = windowHeight/4;
       this.speed = 6;
 
+      if(score > 15){
+        this.speed = 8;
+      }
+      if(score > 25){
+        this.speed = 10;
+      }
+      if(score > 35){
+        this.speed = 12;
+      }
+
       this.highlight = false;
       // console.log("this" + player.x);
       this.hits = function(player) {
-        if (player.y < 280 && this.x > 90 && this.x < 110) {
+        if (player.y < 280 && this.x > 80 && this.x < 125) {
             this.highlight = true;
             return true;
         }
@@ -208,11 +225,118 @@ function Coin() {
       }
   }
 
+  // Double Class //
+  // Double Class //
+  // Double Class //
+  function Double() {
+        this.bottom = 400;
+        this.x = width;
+        this.r = 40;
+        this.y = windowHeight/4;
+        this.speed = 6;
+
+        if(score > 20){
+          this.speed = 8;
+        }
+        if(score > 30){
+          this.speed = 10;
+        }
+        if(score > 40){
+          this.speed = 12;
+        }
+
+        this.highlight = false;
+        // console.log("this" + player.x);
+        this.hits = function(player) {
+          if (player.y < 280 && this.x > 80 && this.x < 125) {
+              this.highlight = true;
+              return true;
+          }
+          return false;
+          this.highlight = false;
+        }
+
+        this.show = function() {
+
+          if (this.highlight) {
+              this.r = 1;
+          }
+          image(doubleImg, this.x, this.y, this.r, this.r);
+        }
+
+        this.update = function() {
+          this.x -= this.speed;
+        }
+
+        this.offscreen = function() {
+          if (this.x < -this.w) {
+            return true;
+          } else {
+            return false;
+          }
+        }
+    }
+// Frown Class //
+// Frown Class //
+// Frown Class //
+function Frown() {
+      this.bottom = 400;
+      this.x = width;
+      this.r = 40;
+      this.y = windowHeight/4;
+      this.speed = 8;
+
+      if(score > 20){
+        this.speed = 9;
+      }
+      if(score > 30){
+        this.speed = 11;
+      }
+      if(score > 40){
+        this.speed = 13;
+      }
+
+      this.highlight = false;
+      // console.log("this" + player.x);
+      this.hits = function(player) {
+        if (player.y < 280 && this.x > 80 && this.x < 125) {
+            this.highlight = true;
+            return true;
+        }
+        return false;
+        this.highlight = false;
+      }
+
+      this.show = function() {
+
+        if (this.highlight) {
+            this.r = 1;
+        }
+        image(frownImg, this.x, this.y, this.r, this.r);
+      }
+
+      this.update = function() {
+        this.x -= this.speed;
+      }
+
+      this.offscreen = function() {
+        if (this.x < -this.w) {
+          return true;
+        } else {
+          return false;
+        }
+      }
+  }
   // end of classes //
 
  function draw(){
   background(125, 204, 200);
 
+
+
+// Player //
+// Player //
+// Player //
   function player0(){
   player.display = function(){
     image(player0icon, player.x, player.y-60, player.r, player.r);
@@ -260,6 +384,10 @@ function Coin() {
 
   if (pauseGame) return;
 
+
+// Poles //
+// Poles //
+// Poles //
   // console.log(score);
   for (var i = poles.length-1; i >= 0; i--) {
     poles[i].show();
@@ -274,13 +402,17 @@ function Coin() {
     }
   }
 
+
+// Coins //
+// Coins //
+// Coins //
   for (var i = coins.length-1; i >= 0; i--) {
     coins[i].show();
     coins[i].update();
 
     if (coins[i].hits(player) == true ) {
-       if ( !mySong.isPlaying() ) {
-           mySong.play();
+       if ( !collect1.isPlaying() ) {
+           collect1.play();
            score++;
          }
     }
@@ -290,36 +422,70 @@ function Coin() {
     }
   }
 
-  for (var i = ncoins.length-1; i >= 0; i--) {
-    ncoins[i].show();
-    ncoins[i].update();
 
-    if (ncoins[i].hits(player) == true ) {
+
+// Doubles //
+// Doubles //
+// Doubles //
+
+  for (var i = doubles.length-1; i >= 0; i--) {
+    doubles[i].show();
+    doubles[i].update();
+
+    if (doubles[i].hits(player) == true ) {
       if ( !collect2.isPlaying() ) {
           collect2.play();
-          // console.log('plus 1!');
+          score++;
+          // console.log('add');
         }
     }
 
-    if (ncoins[i].offscreen()) {
-      ncoins.splice(i, 1);
+    if (doubles[i].offscreen()) {
+      doubles.splice(i, 1);
     }
   }
 
+
+
+// Frown //
+// Frown //
+// Frown //
+
+  for (var i = frowns.length-1; i >= 0; i--) {
+    frowns[i].show();
+    frowns[i].update();
+
+    if (frowns[i].hits(player) == true ) {
+      if ( !collect2.isPlaying() ) {
+          collect2.play();
+          score--;
+          // console.log('add');
+        }
+    }
+
+    if (frowns[i].offscreen()) {
+      frowns.splice(i, 1);
+    }
+  }
+
+
+// Add //
    if(frameCount % 80 == 0) {
        poles.push(new Pole());
    }
-   if(frameCount % 100 == 0) {
+   if(frameCount % 110 == 0) {
        coins.push(new Coin());
    }
+   if(frameCount % 180 == 0) {
+       doubles.push(new Double());
+   }
    if(frameCount % 150 == 0) {
-       ncoins.push(new Coin());
+       frowns.push(new Frown());
    }
 
 
 
-
-
+// Check Variable //
   player.hitCheck = function() {
       if (player.intersects(floor)){
          player.up();

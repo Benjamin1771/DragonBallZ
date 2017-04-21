@@ -17,6 +17,7 @@
     background: rgb(105, 204, 200);
     height: 100%;
     text-align: center;
+    border: 10px solid white;
   }
   #pic{
     width: 70%;
@@ -31,15 +32,33 @@
     text-align: center;
     border-radius: 10px;
   }
+  .space{
+    height: 5%;
+  }
+  .header{
+    border: 5px solid white;
+  }
+  .breakbar{
+    height: 5%;
+  }
+  p{
+    font-size: 24px;
+  }
   </style>
 </head>
 <body>
   <div id="wrapper">
-    <p>Aw dratt!</p><p> Didn't do so well this time!</p>
+    <div class="breakbar"></div>
+    <div class="header">
+      <p>Ahh no! Not your day today!</p>
+    </div>
+    <div class="breakbar"></div>
     <div id="pic">
       <img src="bigemoji.png">
+    <div class= "space"></div>
       <a href="game.html"><div class='button'><p>Play Again?</p></div><a>
     </div>
+      <a href="instructions.html"><div class='button2'><p>Not yet...need instructions...</p></div><a>
   <div>
 </body>
 </html>
