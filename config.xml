@@ -71,7 +71,7 @@
     -->
 
     <!-- Define app icon for each platform. -->
-    <icon src="smile.png" />
+    <icon src="assets/smile.png" />
 
     <!-- <icon src="res/icon/android/icon-36-ldpi.png"   gap:platform="android"    gap:qualifier="ldpi" /> -->
 
