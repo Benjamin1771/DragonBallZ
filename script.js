@@ -145,13 +145,13 @@ function Pole() {
     if (score >= 20){
       this.speed = 9;
     }
-    if (score >= 30){
+    if (score >= 35){
       this.speed = 10;
     }
-    if (score >= 40){
+    if (score >= 45){
       this.speed = 11;
     }
-    if (score >= 50){
+    if (score >= 60){
       this.speed = 13;
     }
 
@@ -522,7 +522,7 @@ function Frown() {
 
 
 // Add //
-   if(frameCount % 80 == 0) {
+   if(frameCount % 105 == 0) {
        poles.push(new Pole());
    }
    if(frameCount % 110 == 0) {
