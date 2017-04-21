@@ -137,7 +137,7 @@ function Pole() {
     this.bottom = random(height/2)+30;
     this.x = width;
     this.w = 20;
-    this.speed = 5;
+    this.speed = 7;
 
     if (score > 10){
       this.speed = 8;
