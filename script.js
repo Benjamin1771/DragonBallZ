@@ -322,7 +322,7 @@ function Frown() {
       this.highlight = false;
       // console.log("this" + player.x);
       this.hits = function(player) {
-        if (player.y < 280 && this.x > 80 && this.x < 125) {
+        if (player.y < 280 && this.x > 45 && this.x < 85) {
             this.highlight = true;
             return true;
         }
