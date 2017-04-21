@@ -219,7 +219,7 @@ function Coin() {
       this.highlight = false;
       // console.log("this" + player.x);
       this.hits = function(player) {
-        if (player.y < 290 && this.x > 45 && this.x < 85) {
+        if (player.y < 275 && this.x > 45 && this.x < 85) {
             this.highlight = true;
             return true;
         }
@@ -271,7 +271,7 @@ function Coin() {
         this.highlight = false;
         // console.log("this" + player.x);
         this.hits = function(player) {
-          if (player.y < 290 && this.x > 45 && this.x < 85) {
+          if (player.y < 275 && this.x > 45 && this.x < 85) {
               this.highlight = true;
               return true;
           }
@@ -322,7 +322,7 @@ function Frown() {
       this.highlight = false;
       // console.log("this" + player.x);
       this.hits = function(player) {
-        if (player.y < 280 && this.x > 45 && this.x < 85) {
+        if (player.y < 275 && this.x > 45 && this.x < 85) {
             this.highlight = true;
             return true;
         }
